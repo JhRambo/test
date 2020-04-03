@@ -95,5 +95,3 @@ function f1(){
 
 echo f1();
 echo f1();
-
-#测试git
