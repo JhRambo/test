@@ -139,6 +139,18 @@
 // print_r($a+$b);
 // print_r(array_merge($a,$b));
 
+//3.二维数组    同一维数组是一个道理
+// $a = array(
+//     'a'=>array('1')
+// );
+// $b = array(
+//     'a'=>array('2'),
+//     'b'=>array('3')
+// );
+// $c = array_merge($a,$b);
+// $c = $a + $b;
+// print_r($c);
+
 #12 md5散列值32位
 // echo strlen(md5('aaaa'));
 
@@ -195,6 +207,7 @@
 // print_r(array_intersect($arr1,$arr2));  //交集  这里只判断value的值是否相同，并输出['a'=>1]
 // print_r(array_reverse($arr1));  //倒叙输出
 // print_r(array_unique($arr1));    //移除重复值，保留第一次出现的值
+// print_r(array_fill('3',5,'a'));  //用给定的键值填充数组
 
 #20 获取字符首次出现的位置 strpos
 // $str = 'aAbB';
@@ -368,3 +381,156 @@
 //对称：DES AES 加解密同一个密钥
 //非对称：RSA   加解密不同钥匙（公钥，私钥）可用于数字签名
 //MD5：hash散列，可能碰撞，非唯一性
+
+#33 正则验证电子邮箱
+// $preg = '';
+
+#34 输出html
+// echo "<a href='http://www.baidu.com'>bd</a>";
+
+#35 数组添加元素
+// $a[] = 'aa';
+// array_push($a,'bb');
+// print_r($a);
+
+#36 判断输出(全局&局部)
+// $num = 10;
+// function multiply(){
+//     // global $num;
+//     $num = $num * 10;
+//     return $num;
+// }
+// multiply();
+// echo $num;
+
+#37 截取字符串
+// $a = 'asdfgh';
+// echo substr($a,0,1);
+// echo $a[0];
+
+#38 创建表
+// create table test_tb(
+//     'id' int(10) not null auto_increment,
+//     'name' varchar(20) default null,
+//     primary key (id),
+//     index (name) 
+// )engine=innodb;
+
+#39 计算两个文件的相对路径
+// $a = '/a/b/c/d/e.php';
+// $b = '/a/b/12/34/c.php';
+// function getRelativePath($a, $b)
+// {
+//     $returnPath = array(dirname($b));   //返回路径中的目录部分，array('/a/b/12/34');
+//     $arrA = explode('/', $a);               //array('','a','b','c','d','e.php');
+//     $arrB = explode('/', $returnPath[0]);   //array('','a','b','12','34');
+//     $len = count($arrB);    //5
+//     for ($n = 1; $n < $len; $n++) {
+//         if ($arrA[$n] != $arrB[$n]) {
+//             break;
+//         }
+//     }
+//     echo $n.PHP_EOL;    //3
+//     if ($len - $n > 0) {
+//         //array_fill() 数组用给定的键值填充数据，=>array('1'=>'..','2'=>'..')
+//         $returnPath = array_merge($returnPath, array_fill(1, $len - $n, '..'));
+//     }
+//     /**
+//      * array(
+//      *  '/a/b/12/34/../../c/d/e.php'
+//      * )
+//      */
+//     $returnPath = array_merge($returnPath, array_slice($arrA, $n));
+//     return implode('/', $returnPath);
+// }
+// echo getRelativePath($a, $b);
+// echo PHP_EOL;
+
+#40 输出当前脚本名称
+// echo basename('test.php');
+// echo $_SERVER['PHP_SELF'];
+
+#41 取模
+// echo 8%-3;
+
+#42 过滤<script>标签
+// $script = '<script>aaa</script>';
+// echo preg_replace('<script>','vv',$script);
+
+#43 遍历文件夹
+// function my_scandir($dir)
+// {
+//     $files = array();
+//     if ($handle = opendir($dir)) {
+//         while (($file = readdir($handle)) !== false) {
+//             if ($file != ".." && $file != ".") {
+//                 if (is_dir($dir . "/" . $file)) {
+//                     $files[$file] = scandir($dir . "/" . $file);
+//                 } else {
+//                     $files[] = $file;
+//                 }
+//             }
+//         }
+//         closedir($handle);
+//         return $files;
+//     }
+// }
+// $dir = '/var/www/al';
+// print_r($dir);
+
+#44 防止sql注入
+// $sql = "\'";
+// echo addslashes($sql);
+
+#45 计算字节个数或字符长度
+// header('Content-Type:text/html;charset=utf-8');
+// $str = '你好文化a1S';
+// // echo strlen($str);   //字节个数
+// echo mb_strlen($str);   //字符长度
+
+#46 截取字符串 字符，中文
+// $str = 'asd1234';
+// $str = "你好啊我是谁呀";
+// $str = "a你好啊我是谁呀";
+// // echo substr($str,2,4);
+// echo mb_substr($str,2,4);
+
+#47 分割字符串
+// $str = 'asdfqw121';
+// print_r(str_split($str));
+
+#48 关于中文字符翻转的问题
+// $str = "nihao你好中国";
+// $fa = join("",array_reverse(preg_split("//u", $str)));  //u用来匹配中文
+// print_r($fa);
+
+#49 获取当前脚本路径
+// echo __FILE__;
+
+#50 关于error_reporting()
+// error_reporting(E_ALL);
+// error_reporting(E_ALL &~ E_NOTICE);
+// error_reporting(0);
+// 相关题目：error_reporting(2047) 什么作用?
+// 2047 = 1 + 2 + 4 + 8 + 16 + 32 + 64 + 128 + 256 + 512 + 1024
+// 其中：
+// 1 对应 E_ERROR，
+// 2 对应 E_WARNING，
+// 4 对应 E_PARSE，
+// 8 对应 E_NOTICE，
+// 16 对应 E_CORE_ERROR，
+// 32 对应 E_CORE_WARNING
+// 64 对应 E_COMPILE_ERROR，
+// 128对应 E_COMPILE_WARNING，
+// 256 对应 E_USER_ERROR，
+// 512 对应 E_USER_WARNING，
+// 1024 对应 E_USER_NOTICE。
+// error_reporting(2047)意味着上述错误都会显示出来。
+
+#51 双$运算 => 可变变量
+// $str = 'cd';
+// $$str = 'hotdog';   //$cd = 'hotdog'
+// $$str .= 'ok';  //$cd = 'hotdogok';
+// echo $cd;
+
+
