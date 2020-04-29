@@ -69,12 +69,13 @@
 // echo memory_get_usage().PHP_EOL;
 
 #9 xdebug的应用，引用计数器
-// $a = "i am string";
-// // $b = &$a;
-// xdebug_debug_zval('a');
 // echo memory_get_usage().PHP_EOL;
-// echo memory_get_peak_usage().PHP_EOL;
-// print_r(getrusage());
+// $a = "i am string";
+// echo memory_get_usage().PHP_EOL;
+// $b = &$a;   //a: (refcount=2, is_ref=1)='i am string'
+// // $b = $a;
+// xdebug_debug_zval('a'); //a: (interned, is_ref=0)='i am string'
+// echo memory_get_usage().PHP_EOL;
 
 #10 位运算符
 /**
@@ -533,4 +534,83 @@
 // $$str .= 'ok';  //$cd = 'hotdogok';
 // echo $cd;
 
+#52 pathinfo返回文件路径信息
+/**
+ * Array
+ * (
+ *      [dirname] => /test/test1/test2
+ *      [basename] => test.txt
+ *      [extension] => txt
+ *      [filename] => test
+ * )
+ */
+// print_r(pathinfo('/test/test1/test2/test.txt'));
+
+#53 printf
+// $number = 42;
+// printf("%.2d\n", $number);
+// printf("%1.2f\n", $number);
+// printf("%1.2u\n", $number);
+
+#54 保留小数
+// $num = 1.23601;
+// echo round($num,2).PHP_EOL; //四舍五入  1.24
+// echo sprintf('%.2f',$num).PHP_EOL; //四舍五入  1.24
+// echo number_format($num, 2).PHP_EOL; //四舍五入  1.24
+
+#55 随机数
+// echo rand(0,99999).PHP_EOL;
+// echo rand().PHP_EOL;
+// echo mt_rand(0,99999).PHP_EOL;
+// echo mt_rand().PHP_EOL;
+
+#56 true or false
+// if(in_array('00001',array(1))){
+//     echo 1;
+// }else{
+//     echo 2;
+// }
+// var_dump('000001' == 1);
+
+// $a = in_array('01',array('1')) == var_dump('01' == 1);
+// echo $a;
+
+#57 字符比较
+// $a = 'HELLO PHP';
+// $b = 'hello php';
+// $b = 'HELLO PHP';
+// var_dump(strcasecmp($a,$b)); //不区分大小写
+// var_dump(strcmp($a,$b));    //区分大小写
+
+#58 传值引用
+/**
+ * 可以把“变量”看成一个容器，“变量名”相当于这个容器的标签
+ * unset相当于把这个标签名给撕了，但是只要这个盒子还有标签名贴着，那就不会被PHP的垃圾回收机制给回收掉！
+ * 所以除非把所有标签给撕了，或者直接把容器里面的东西给拿出来，那么就成了空==>NULL了
+ */
+// echo memory_get_usage().PHP_EOL;
+// $a = "hello";
+// echo memory_get_usage().PHP_EOL;
+// $b = &$a;   //$b = "hello"
+// echo memory_get_usage().PHP_EOL;
+// unset($b);
+// echo memory_get_usage().PHP_EOL;
+// echo $a; //hello
+
+#59 empty isset
+// $str = 'a';
+// $str = '';
+// $str = '0.0';
+// $str = 0;
+// $str = null;
+// $str = false;
+// echo empty(trim($str)) ? "true" : "false";
+// echo empty($str) ? "true" : "false";
+// echo isset($str) ? "true" : "false";    //isset 只要变量有设置值即为真
+
+#60 intval (int)不会保留小数
+// $num = 9.23;
+// $num = '00009';
+// echo intval($num);  
+// echo (int)$num;
 
