@@ -198,21 +198,21 @@
 
 #19 数组操作
 // $arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
-// $arr2 = ['k'=>1];
+// $arr2 = ['k'=>1,'l'=>9];
 // print_r(array_flip($arr1));   //键值互换
 // print_r(array_search(1,$arr1));  //查询给定值的key
-// print_r(array_splice($arr1,0,1));  //截取数组，偏移量，长度
+// print_r(array_splice($arr1,0,2));  //截取数组，偏移量，长度
 // print_r(array_chunk($arr1,3));   //拆数组=》二维数组，3表示每个子数组的元素个数
 // print_r(array_combine(['a','b'],['1','2']));    //key和value合并生成一个数组
 // print_r(array_diff($arr2,$arr1));   //返回$arr2中不存在的数组 这里只判断value的值是否相同
-// print_r(array_intersect($arr1,$arr2));  //交集  这里只判断value的值是否相同，并输出['a'=>1]
-// print_r(array_reverse($arr1));  //倒叙输出
+// print_r(array_intersect($arr2,$arr1));  //交集  这里只判断value的值是否相同，并输出['k'=>1]（以第一个参数的数组为准）
+// print_r(array_reverse($arr1));  //倒序输出
 // print_r(array_unique($arr1));    //移除重复值，保留第一次出现的值
-// print_r(array_fill('3',5,'a'));  //用给定的键值填充数组
+// print_r(array_fill('3',5,'a'));  //用给定的键值填充数组（3：起始索引，5：数组长度，a：键值）
 
 #20 获取字符首次出现的位置 strpos
 // $str = 'aAbB';
-// echo strpos($str,'A');
+// echo strpos($str,'AbB');
 
 #21 字符翻转1234567890 转换成 0987654321
 // (用前述你最熟悉的语言编写并标注简单注释, 不要使用函数,
@@ -489,7 +489,7 @@
 // // echo strlen($str);   //字节个数
 // echo mb_strlen($str);   //字符长度
 
-#46 截取字符串 字符，中文
+#46 mb_substr截取字符串 字符，中文
 // $str = 'asd1234';
 // $str = "你好啊我是谁呀";
 // $str = "a你好啊我是谁呀";
@@ -503,6 +503,7 @@
 #48 关于中文字符翻转的问题
 // $str = "nihao你好中国";
 // $fa = join("",array_reverse(preg_split("//u", $str)));  //u用来匹配中文
+// $fa = implode("",array_reverse(preg_split("//u", $str)));  //u用来匹配中文
 // print_r($fa);
 
 #49 获取当前脚本路径
@@ -604,9 +605,10 @@
 // $str = 0;
 // $str = null;
 // $str = false;
+// $a = 1;
 // echo empty(trim($str)) ? "true" : "false";
 // echo empty($str) ? "true" : "false";
-// echo isset($str) ? "true" : "false";    //isset 只要变量有设置值即为真
+// echo isset($str,$a,$b) ? "true" : "false";    //isset 只要变量有设置值即为真,多个参数需要全部为真才为真
 
 #60 intval (int)不会保留小数
 // $num = 9.23;
@@ -614,3 +616,394 @@
 // echo intval($num);  
 // echo (int)$num;
 
+#61 抽象类
+/**
+ * 抽象类/抽象方法声明的关键字abstract
+ * 抽象类内部可以没有抽象方法
+ * 内部只要有一个方法是抽象的，那么该类必须是抽象类
+ * 抽象方法必须被重写
+ * 抽象类不能被实例化
+ * 可设置属性，可设置静态变量，也可以设置常量
+ * 子类可重定义静态变量，常量的值
+ */
+// abstract class Person
+// {
+//     public $name;    //成员属性
+//     public $age;
+//     static $num = 10;
+//     const NAME = '111'; //常量
+//     const AGE = 10;
+//     //抽象方法
+//     // abstract protected function run();
+//     public function aa($name, $age)
+//     {
+//         $this->name = $name;
+//         $this->age = $age;
+//         $person['name'] = $this->name;
+//         $person['age'] = $this->age;
+//         return $person;
+//     }
+//     public function bb(){
+//         return 'bb';
+//     }
+// }
+// //子类
+// abstract class Man extends Person
+// {
+//     // //实现抽象方法
+//     // public function run()
+//     // {
+//     //     return '运行...';
+//     // }
+//     public function cc(){
+//         return 'cc';
+//     }
+//     abstract function dd();
+// }
+// //子子类
+// class child extends Man
+// {
+//     function dd(){
+//         return 'dd';
+//     }
+// }
+
+// // $m1 = new Man();
+// // echo $m1->run();
+// // print_r($m1->aa('jack', '20'));
+// // echo $m1->bb();
+// // echo $m1->cc();
+// $m2 = new child();
+// echo $m2->dd();
+// echo $m2::$num;
+// //演示抽象类不能被实例化
+// // $person = new Person();
+// // echo $person::NAME;
+
+#62 接口
+/**
+ * 接口内的方法都是抽象方法，不需要abstract声明
+ * 必须是public，可省略
+ * 不能设置属性，不能设置静态变量，可设置常量
+ * 子类必须实现抽象类的所有方法，且必须是public，可省略，同接口一样
+ * 子类不能覆盖接口中的常量
+ */
+// interface Person{
+//     // public $name;    //属性，报错
+//     const NAME = 'mark';    //常量
+//     // static $num = 10;   //静态变量，报错
+//     function aa();
+//     function bb();
+//     function cc();
+// }
+
+// //子类
+// class Man implements Person{
+//     const NAME = 'JACK';    //报错
+//     function aa(){
+//         return 'aa';
+//     }
+//     function bb(){
+//         return 'bb';
+//     }
+//     function cc(){
+//         return 'cc';
+//     }
+// }
+
+// $m1 = new Man();
+// echo $m1->aa();
+// echo $m1->bb();
+// echo $m1->cc();
+// echo Man::NAME;
+
+#63 静态变量与常量的区别
+/**
+ * 静态变量运行过程中可变，常量不可变
+ */
+// define('AAA',123);          //define只能用于定义全局常量
+// const TEST_CT = 'test_ct';  //const 可以定义全局常量
+// class aa{
+//     // define('BBB',456);  //define不可用于类内部定义
+//     const NUM = 10;
+//     static $num = 10;
+// }
+
+// class bb extends aa{
+//     const NUM = 11; //子类可重复定义
+//     static $num = 11;//子类可重复定义
+//     static function cc(){
+//         Parent::$num += 1;
+//         // Parent::NUM += 1;    //报错
+//         // Parent::NUM = 11;    //报错
+//         return self::NUM.self::$num.PHP_EOL.Parent::NUM.Parent::$num.PHP_EOL;
+//     }
+
+// }
+// $bb = new bb();
+// echo $bb->cc();
+// echo $bb::cc();
+// echo bb::cc();
+// echo $bb::$num;
+// echo aa::$num;
+// echo $bb::NUM;  //$bb->NUM; 报错
+// echo $bb->NUM = '这里的意思并不是修改常量NUM的值，只是设置一个变量的值而已';
+// echo $bb->NUM;
+// echo $bb::NUM;  //如果上面是修改常量的值，那么这里应该发生变化才是，但是这里输出原来的值，所以可以知道常量的值不被修改
+// echo AAA;
+// echo TEST_CT;
+
+#64 递归计算
+// $num = 7;
+// function add($num)
+// {
+//     static $total = 0;
+//     if ($num >= 1) {
+//         $total += $num; //7
+//         return add(--$num);    //6 5 4 3 2 1 
+//     } else {
+//         return $total;
+//     }
+// }
+// var_dump(add($num));
+
+#65 不同类型元素相加
+// $num1 = (float)1.23;
+// $num2 = (string)'2';
+// echo $num1+$num2;
+
+#66 substr
+// $mystr="Yantai nanshan University";
+// // echo substr($mystr,2,2);
+// echo substr($mystr,-5,-4);
+
+#67 final
+// final class aa{
+//     final $name;    //final 不能用于声明类中成员属性
+//     final function bb(){
+
+//     }
+// }
+
+#68 递归
+/**
+ * f(0) = 2
+ * f(1) = 1 * f(0) = 2
+ * f(2) = 2 * f(1) = 4
+ * f(3) = 3 * f(2) = 12
+ * f(4) = 4 * f(3) = 48
+ * f(4) = f(f(2))   = 48
+ */
+// function f($x)
+// {
+//     return (($x > 0) ? $x * f($x - 1) : 2);
+// }
+// echo $i = f(f(2));
+
+#69 递归
+/**
+ * f(-2) = 1;
+ * f(-1) = 1;
+ * f(0) = 1;
+ * f(1) = 1;
+ * f(2) = 1;
+ * f(3) = 1;
+ * f(4) = f(2)+f(-2)+1; =>1+1+1=3
+ * f(5) = f(3)+f(-1)+1; =>1+1+1=3
+ * f(6) = f(4)+f(0)+1;  =>3+1+1=5
+ * f(7) = f(5)+f(1)+1;  =>3+1+1=5
+ * f(8) = f(6)+f(2)+1;  =>5+1+1=7
+ * f(9) = f(7)+f(3)+1   =>5+1+1=7
+ * f(f(9)) = f(7)
+ */
+// function f($n) {
+//     if($n<=3) return 1;
+//     else return f($n-2)+f($n-6)+1;
+// }
+
+// echo f(f(9));
+
+#70 算法-有n步台阶，一次只能上1步或2步，共有多少种走法
+/**
+ * 1、n<=2的时候 并没有其他可选择的，所以可以得出f(0)=0;f(1)=1;f(2)=2; 
+ * 2、n>2时情况就变复杂起来，但是这个时候可以操作的步骤也就2种 
+ * 也就是走1步(n-1)与走2步(n-2)。所以可以得到f(n)=f(n-1)+f(n-2); 
+ */
+/**
+ * 递归
+ * 优点：可能是最好理解的算法了把。代码简单，好理解。 
+ * 缺点：计算次数颇多，有很多冗余计算。数值越大，效率越低，递归调用浪费了空间，而且递归太深容易造成堆栈的溢出
+ */
+// function findStep($n) {
+//     if($n<=2) {
+//         return $n;
+//     }
+//     return findStep($n-1)+findStep($n-2);
+// }
+
+/**
+ * 迭代
+ * 优点: 基本没有冗余计算，效率高，因为时间只因循环次数增加而增加，而且没有额外的空间开销
+ * 缺点: 谁能一次读完就理解的？代码不如递归简洁，可读性不好
+ */
+// function findStep($n)
+// {
+//     if ($n <= 2) return $n;
+//     $first = 1;  //初始化为走到第1级台阶的走法
+//     $second = 2; //初始化为走到第2级台阶的走法
+//     $third = 0;
+//     for ($i = 3; $i <= $n; $i++) {
+//         //最后跨2步 + 最后跨1步的走法
+//         $third = $first + $second;
+//         $first = $second;
+//         $second = $third;
+//     }
+//     return $third;
+// }
+// echo findStep(100);
+
+#71 算法题给定一个长字符串zesfjjk和一个短字符串xsfjx，求短字符串在长字符串中出现的最长部分是什么
+// $lstr = 'zesfjjk';
+// $sstr = 'xsfjx';
+// if (strpos($lstr, $sstr) > 0) {
+//     echo $sstr;
+// } else {
+//     $arr = [];
+//     for ($i = 0; $i < mb_strlen($sstr); $i++) {
+//         for ($j = 1; $j < mb_strlen($sstr)-$i; $j++) {
+//             $aa = substr($sstr, $i, $j);
+//             if (strpos($lstr, $aa) > 0) {
+//                 $arr[] = $aa;
+//             }
+//         }
+//     }
+//     print_r($aa);
+// }
+
+#72 给定一个无序数组，求这个数组变为有序后相邻元素之差的最大值是多少，要求时间复杂度是O(n)
+// $a = [30,24,10,9,5,12,8,36];
+// sort($a);
+// print_r($a);
+// $diff = [];
+// for($i=0;$i<count($a);$i++){
+//     if($i<count($a)-1){
+//         $diff[] = abs($a[$i+1] - $a[$i]);
+//     }
+    
+// }
+// print_r($diff);
+// echo max($diff);
+
+#73 bitmap
+// class bitMap
+// {
+//     //bit位运算
+//     public function setBit($val)
+//     {
+//         //从0开始填充50个0，如果需要更大的值，则需要改动50即可
+//         $bit_map = array_fill(0, 50, 0);
+//         // 4b*8 = 32b,50*32 = 1600 ,也就是说数组的值不能大约1600
+//         $int_bit_size = PHP_INT_SIZE * 8;
+
+//         //填充
+//         foreach ($val as $k => $v) {
+//             //得到到byte[]的index 相当于// $div = $v / $init_bit_size; //byte所在的组,2的5次方 = 32
+//             $index = $v >> 5;
+//             //得到在byte[index]的位置
+//             $position = $v % $int_bit_size;
+
+//             //将1左移position后，那个位置自然就是1
+//             $offset = $position >> 1;
+//             //和以前的数据做|，这样，那个位置就替换成1了。
+//             $bit_map[$index] = $bit_map[$index] | $offset; //循环 把标示位替换为1
+//         }
+
+//         $b = array();
+//         foreach ($bit_map as $k => $v) {
+//             for ($i = 0; $i < $int_bit_size; $i++) {
+//                 $tmp = $i >> 1;
+//                 $flag = $tmp & $bit_map[$k];
+//                 if ($flag) {
+//                     $b[] = $k * $int_bit_size + $i;
+//                 }
+//             }
+//         }
+//         var_dump($b);
+//         exit;
+//     }
+// }
+
+// $b = new bitMap();
+// $c = array(1, 4, 3, 50, 34, 60, 100, 88, 200, 150, 300); //定义一个乱序的数组
+// $b->setBit($c);
+
+#74 global定义的全局常量和$GLOBALS的区别？
+/**
+ * global $var其实就是$var = &$GLOBALS['var']。调用外部变量的一个别名而已。
+ */
+// $var1 = 1;
+// $var2 = 2;
+// function test()
+// {
+//     $GLOBALS['var2'] = &$GLOBALS['var1'];
+// }
+// test();
+// echo $var2; //1
+
+// $var1 = 1;
+// $var2 = 2;
+// function test()
+// {
+//     global $var1, $var2;
+//     // $var2 = &$var1;
+//     //等价于
+//     // $var2 = &$GLOBALS['var1'];
+//     $var1 = $var2;  //2
+//     $var1 = &$var2;  //1
+// }
+// test();
+// echo $var1;
+// echo $var2; //2 $var1的引用指向了$var2的引用地址，实质的值没有改变
+
+// $var1 = 1;
+// function test()
+// {
+//     unset($GLOBALS['var1']);    //可以unset
+//     // unset($val1);   //这个方式不能unset
+//     //这个方式也不能unset
+//     //证明删除的只是别名|引用，起本身的值没有受到任何的改变。
+//     // global $var1;
+//     // unset($var1);
+// }
+// test();
+// echo $var1;
+
+#75 地址引用
+// echo memory_get_usage().PHP_EOL;
+// $a = array_fill('10','5','aa');    //起始索引10，值为aa,数组长度为30
+// xdebug_debug_zval('a');
+// echo memory_get_usage().PHP_EOL;
+// $b = &$a;    //指向同一个引用地址
+// $b = $a;     //同时被修改
+// // $b = array_fill('10','5','bb');    //cow
+// xdebug_debug_zval('a');
+// // $a = 6;
+// // $b = 6;
+// echo memory_get_usage().PHP_EOL;
+// xdebug_debug_zval('a');
+
+#76 函数返回类型声明
+// function a():int{//必须返回int类型,否则报错
+//     return 1;
+// }
+// function b():?int{//必须返回int类型或者null类型,否则报错
+//     return 2;   //null
+// }
+
+// echo a();
+// echo b();
+
+#77 字符串去重
+// $str = "1223345677881";
+// $a = str_split($str,1);
+// print_r(array_unique($a));
