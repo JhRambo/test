@@ -194,7 +194,15 @@
 
 #18 计算字符长度
 // $str = 'hello你好世界';
+// $str = '   ';    //3个空格
+// $str = null;     //0
+// $str = false;    //0
+// $str = true;        //1
+// $str = 0;       //1
 // echo strlen($str);  //17
+// $str = '你好php';
+// echo strlen($str);   //字节长度
+// echo mb_strlen($str);   //字符长度
 
 #19 数组操作
 // $arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
@@ -1007,3 +1015,157 @@
 // $str = "1223345677881";
 // $a = str_split($str,1);
 // print_r(array_unique($a));
+
+#78 二叉树遍历
+// class Node
+// {
+//     public $value;
+//     public $child_left;
+//     public $child_right;
+// }
+// final class Ergodic
+// {
+//     //前序遍历:先访问根节点，再遍历左子树，最后遍历右子树；并且在遍历左右子树时，仍需先遍历根节点，然后访问左子树，最后遍历右子树  
+//     public static function preOrder($root)
+//     {
+//         $stack = array();
+//         array_push($stack, $root);
+//         while (!empty($stack)) {
+//             $center_node = array_pop($stack);
+//             echo $center_node->value . ' ';
+//             //先把右子树节点入栈，以确保左子树节点先出栈  
+//             if ($center_node->child_right != null) array_push($stack, $center_node->child_right);
+//             if ($center_node->child_left != null) array_push($stack, $center_node->child_left);
+//         }
+//     }
+//     //中序遍历:先遍历左子树、然后访问根节点，最后遍历右子树；并且在遍历左右子树的时候。仍然是先遍历左子树，然后访问根节点，最后遍历右子树  
+//     public static function midOrder($root)
+//     {
+//         $stack = array();
+//         $center_node = $root;
+//         while (!empty($stack) || $center_node != null) {
+//             while ($center_node != null) {
+//                 array_push($stack, $center_node);
+//                 $center_node = $center_node->child_left;
+//             }
+//             $center_node = array_pop($stack);
+//             echo $center_node->value . ' ';
+//             $center_node = $center_node->child_right;
+//         }
+//     }
+//     //后序遍历:先遍历左子树，然后遍历右子树，最后访问根节点；同样，在遍历左右子树的时候同样要先遍历左子树，然后遍历右子树，最后访问根节点  
+//     public static function endOrder($root)
+//     {
+//         $push_stack = array();
+//         $visit_stack = array();
+//         array_push($push_stack, $root);
+//         while (!empty($push_stack)) {
+//             $center_node = array_pop($push_stack);
+//             array_push($visit_stack, $center_node);
+//             //左子树节点先入$pushstack的栈，确保在$visitstack中先出栈  
+//             if ($center_node->child_left != null) array_push($push_stack, $center_node->child_left);
+//             if ($center_node->child_right != null) array_push($push_stack, $center_node->child_right);
+//             while (!empty($visit_stack)) {
+//                 $center_node = array_pop($visit_stack);
+//                 echo $center_node->value . ' ';
+//             }
+//         }
+//     }
+// }
+// //创建二叉树  
+// $a = new Node();
+// $b = new Node();
+// $c = new Node();
+// $d = new Node();
+// $e = new Node();
+// $f = new Node();
+// $g = new Node();
+// $h = new Node();
+// $i = new Node();
+// $a->value = 'A';
+// $b->value = 'B';
+// $c->value = 'C';
+// $d->value = 'D';
+// $e->value = 'E';
+// $f->value = 'F';
+// $g->value = 'G';
+// $h->value = 'H';
+// $i->value = 'I';
+// $a->child_left = $b;
+// $a->child_right = $c;
+// $b->child_left = $d;
+// $b->child_right = $g;
+// $c->child_left = $e;
+// $c->child_right = $f;
+// $d->child_left = $h;
+// $d->child_right = $i;
+
+// //前序遍历  
+// Ergodic::preOrder($a);  //结果是：A B D H I G C E F  
+// echo PHP_EOL;
+// //中序遍历  
+// Ergodic::midOrder($a);  //结果是： H D I B G A E C F  
+// echo PHP_EOL;
+// //后序遍历  
+// Ergodic::endOrder($a); //结果是:  H I D G B E F C A
+// echo PHP_EOL;
+
+#79 类public protected private
+// class aa{
+//     public function bb(){
+//         return 1;
+//     }
+//     protected function cc(){
+//         return 1;
+//     }
+//     private function dd(){
+//         return 1;
+//     }
+// }
+
+// class ee extends aa{
+//     public function bb(){
+//         return parent::cc();    //子类内部访问父类的protected
+//         // return parent::dd();    //父类的private不能被子类访问
+//         return 2;
+//     }
+//     protected function gg(){
+//         return 2;
+//     }
+//     private function hh(){
+//         return 2;
+//     }
+// }
+// $c1 = new ee();
+// echo $c1::bb();
+// echo $c1::gg(); //protected private不能在类外部访问
+
+#80 不同http协议区别
+/**
+ * 1.http0.9
+ * 最初版本
+ * 仅支持get
+ * 仅能传输纯文本内容
+ * 无状态连接
+ * 
+ * 2.http1.0
+ * 传输文本形式不受限制
+ * 本质上支持长连接，增加了keep-alive，默认短连接
+ * 增加了状态码
+ * 
+ * 3.http1.1
+ * 默认长连接，tcp串行，长时间没通信，则关闭
+ * 节约带宽，支持只发送header头信息，不带任何body
+ * 断点传输请求
+ * 
+ * 4.http2.0
+ * 多路复用，tcp并发请求
+ * 头部header压缩，传输更快
+ * 服务端有主动推送的功能
+ * 
+ */
+
+#81 字符串相加
+//  $str1 = (int)'asddf';  //0
+//  $str2 = (int)'qwert';  //0
+//  echo $str1+$str2;
