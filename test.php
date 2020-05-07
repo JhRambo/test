@@ -178,10 +178,10 @@
 //以上两个方法均需先知道小数点后几位，需先指定
 
 #16 计算文件的大小，filesize
-// $file = fopen('./aa.txt',"w");
+// $file = fopen('./bb.txt',"r");
 // // fwrite($file,1111);
 // fclose($file);
-// print_r(filesize('./aa.txt'));
+// print_r(filesize('./bb.txt'));
 
 #17 parse_url 处理url
 // $url = "http://www.baidu.com/abc/ab/1.php?id=1&name=aaa#bbb";
@@ -205,7 +205,10 @@
 // echo mb_strlen($str);   //字符长度
 
 #19 数组操作
-// $arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
+/**
+ * 底层结构：hashtable，数组+链表
+ */
+$arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
 // $arr2 = ['k'=>1,'l'=>9];
 // print_r(array_flip($arr1));   //键值互换
 // print_r(array_search(1,$arr1));  //查询给定值的key
@@ -217,6 +220,10 @@
 // print_r(array_reverse($arr1));  //倒序输出
 // print_r(array_unique($arr1));    //移除重复值，保留第一次出现的值
 // print_r(array_fill('3',5,'a'));  //用给定的键值填充数组（3：起始索引，5：数组长度，a：键值）
+// array_pop($arr1);   //弹出顶部元素，类似于栈，后进先出
+// print_r($arr1);
+// array_shift($arr1);
+// print_r($arr1); //弹出头部元素，类似于队列，先进先出
 
 #20 获取字符首次出现的位置 strpos
 // $str = 'aAbB';
@@ -618,11 +625,16 @@
 // echo empty($str) ? "true" : "false";
 // echo isset($str,$a,$b) ? "true" : "false";    //isset 只要变量有设置值即为真,多个参数需要全部为真才为真
 
-#60 intval (int)不会保留小数
-// $num = 9.23;
-// $num = '00009';
-// echo intval($num);  
+#60 intval (int)不会保留小数，ceil向上取整，round四舍五入,floor向下取整
+// $num = 9.5367;
+// // $num = '00009';
+// echo intval($num);
+// echo intval('5acv');    //5
 // echo (int)$num;
+// echo (int)'5acv';       //5
+// echo ceil($num);
+// echo round($num,3); //第二个参数表示保留小数点后几位
+// echo floor($num);
 
 #61 抽象类
 /**
@@ -1169,3 +1181,93 @@
 //  $str1 = (int)'asddf';  //0
 //  $str2 = (int)'qwert';  //0
 //  echo $str1+$str2;
+
+#82 链表
+// class Node
+// {
+//     public $data = '';
+//     public $next = null;
+//     function __construct($data)
+//     {
+//         $this->data = $data;
+//     }
+// }
+
+// // 计算链表元素个数
+// function countNode($head)
+// {
+//     $cur = $head;
+//     $i = 0;
+//     while (!is_null($cur->next)) {
+//         ++$i;
+//         $cur = $cur->next;
+//     }
+//     return $i;
+// }
+
+// /**
+//  * 顺序增加节点
+//  * $head：当前节点
+//  * $data：要增加的节点元素
+//  */
+// function addNode($head, $data)
+// {
+//     $cur = $head;
+//     while (!is_null($cur->next)) {
+//         $cur = $cur->next;
+//     }
+//     $new = new Node($data);
+//     $cur->next = $new;
+// }
+
+// // 紧接着插在$no后
+// function insertNode($head, $data, $no)
+// {
+//     if ($no > countNode($head)) {
+//         return false;
+//     }
+//     $cur = $head;
+//     $new = new Node($data);
+//     for ($i = 0; $i < $no; $i++) {
+//         $cur = $cur->next;
+//     }
+//     $new->next = $cur->next;
+//     $cur->next = $new;
+// }
+
+// // 删除第$no个节点
+// function delNode($head, $no)
+// {
+//     if ($no > countNode($head)) {
+//         return false;
+//     }
+//     $cur = $head;
+//     for ($i = 0; $i < $no - 1; $i++) {
+//         $cur = $cur->next;
+//     }
+//     $cur->next = $cur->next->next;
+// }
+
+// // 遍历链表
+// function showNode($head)
+// {
+//     $cur = $head;
+//     while (!is_null($cur->next)) {
+//         $cur = $cur->next;
+//         echo $cur->data . PHP_EOL;
+//     }
+// }
+
+// $head = new Node(null); //定义头节点
+// print_r($head); //此时链表为空
+// addNode($head, 'a');
+// print_r($head);
+// addNode($head, 'b');
+// print_r($head);
+// addNode($head, 'c');
+// print_r($head);
+// insertNode($head, 'd', countNode($head));   //插入节点
+// print_r($head);
+// showNode($head);
+// delNode($head, 2);  //删除节点
+// showNode($head);
