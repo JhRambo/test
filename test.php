@@ -1271,3 +1271,26 @@ $arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
 // showNode($head);
 // delNode($head, 2);  //删除节点
 // showNode($head);
+
+#83 斐波那契数列 1 1 2 3 5 8 13 21 34 55 …
+//非递归写法：
+// function fbnq($n){  //传入数列中数字的个数
+//     if($n <= 0){
+//         return 0;
+//     }
+//     $array[1] = $array[2] = 1; //设第一个值和第二个值为1
+//     for($i=3;$i<=$n;$i++){ //从第三个值开始
+//         $array[$i] = $array[$i-1] + $array[$i-2]; 
+//         //后面的值都是当前值的前一个值加上前两个值的和
+//     }
+//     return $array;
+// }
+
+// //递归写法：
+// function fbnq($n){
+//     if($n <= 0) return 0;
+//     if($n == 1 || $n == 2) return 1;
+//     return fbnq($n - 1) + fbnq($n - 2);
+// }
+
+// print_r(fbnq(6));
