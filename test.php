@@ -1292,5 +1292,76 @@ $arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
 //     if($n == 1 || $n == 2) return 1;
 //     return fbnq($n - 1) + fbnq($n - 2);
 // }
-
 // print_r(fbnq(6));
+
+#84 %  取模，即整除
+// echo 3%2;   //1
+// echo intval(3/2);
+
+#85 汉诺塔问题：递归方法
+/**
+ * Hanoi(n, a, b, c) = Hanoi(n-1, a, c, b) + 1 + Hanoi(n-1, b, a, c)：
+ * 将a上面n-1个盘子移到b，再将a最下面的盘子移到c，再将b上的n-1个盘子移到c，
+ * 此时，n盘子汉诺塔问题 变成了 移动一个盘子 + 两个n-1盘子汉诺塔问题。
+ */
+// function hanoi($n)
+// {
+//     if ($n <= 1) return 1;
+//     return 2 * hanoi($n - 1) + 1;
+// }
+// $n = 6;
+// echo hanoi($n);
+
+#86 闭包的使用
+/**
+ * 匿名函数
+ * 闭包总结到最后，就是与函数不同的地方就是多加了一个use中间值，
+ * 使用的时候注意一点是function后面的()为可变变量，use()里面的变量为实例一次后不改动的变量
+ */
+// $param = 1;
+// $data = function () use ($param)
+// {
+//     var_dump($param);    
+// };
+
+// $data();
+
+// $param = 2;
+// $data();
+
+// $param = 1;
+// //实例化
+// $data = function () use ($param)
+// {
+//     var_dump($param);    
+// };
+
+// $data();
+
+// $param = 2;
+// //实例化
+// $data = function () use ($param)
+// {
+//     var_dump($param);
+// };
+// $data();
+
+// $arr = [
+//     '米' => ['咸粥', '甜粥', '米饭'], 
+//     '面' => ['面条', '花卷', '馒头'], 
+// ];
+
+// $param = '';
+// $bag = function ($data) use ($param)
+// {
+//     $l = count($data);
+//     return $data[rand(0, $l-1)];
+// };
+
+// $eat_arr = [];
+
+// foreach ($arr as $key => $value) {
+//     $each_arr[] = '吃'.$key.'：'.$bag($value);        
+// }
+
+// echo implode(',', $each_arr);
