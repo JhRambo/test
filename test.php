@@ -178,10 +178,10 @@
 //以上两个方法均需先知道小数点后几位，需先指定
 
 #16 计算文件的大小，filesize
-// $file = fopen('./aa.txt',"w");
+// $file = fopen('./bb.txt',"r");
 // // fwrite($file,1111);
 // fclose($file);
-// print_r(filesize('./aa.txt'));
+// print_r(filesize('./bb.txt'));
 
 #17 parse_url 处理url
 // $url = "http://www.baidu.com/abc/ab/1.php?id=1&name=aaa#bbb";
@@ -194,9 +194,20 @@
 
 #18 计算字符长度
 // $str = 'hello你好世界';
+// $str = '   ';    //3个空格
+// $str = null;     //0
+// $str = false;    //0
+// $str = true;        //1
+// $str = 0;       //1
 // echo strlen($str);  //17
+// $str = '你好php';
+// echo strlen($str);   //字节长度
+// echo mb_strlen($str);   //字符长度
 
 #19 数组操作
+/**
+ * 底层结构：hashtable，数组+链表
+ */
 // $arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
 // $arr2 = ['k'=>1,'l'=>9];
 // print_r(array_flip($arr1));   //键值互换
@@ -209,6 +220,10 @@
 // print_r(array_reverse($arr1));  //倒序输出
 // print_r(array_unique($arr1));    //移除重复值，保留第一次出现的值
 // print_r(array_fill('3',5,'a'));  //用给定的键值填充数组（3：起始索引，5：数组长度，a：键值）
+// array_pop($arr1);   //弹出顶部元素，类似于栈，后进先出
+// print_r($arr1);
+// array_shift($arr1);
+// print_r($arr1); //弹出头部元素，类似于队列，先进先出
 
 #20 获取字符首次出现的位置 strpos
 // $str = 'aAbB';
@@ -610,11 +625,16 @@
 // echo empty($str) ? "true" : "false";
 // echo isset($str,$a,$b) ? "true" : "false";    //isset 只要变量有设置值即为真,多个参数需要全部为真才为真
 
-#60 intval (int)不会保留小数
-// $num = 9.23;
-// $num = '00009';
-// echo intval($num);  
+#60 intval (int)不会保留小数，ceil向上取整，round四舍五入,floor向下取整
+// $num = -9.5367;
+// // $num = '00009';
+// echo intval($num);
+// echo intval('5acv');    //5
 // echo (int)$num;
+// echo (int)'5acv';       //5
+// echo ceil($num);
+// echo round($num,3); //第二个参数表示保留小数点后几位
+// echo floor($num);
 
 #61 抽象类
 /**
@@ -684,7 +704,7 @@
 /**
  * 接口内的方法都是抽象方法，不需要abstract声明
  * 必须是public，可省略
- * 不能设置属性，不能设置静态变量，可设置常量
+ * 不能设置属性，不能设置静态变量，可设置【常量】
  * 子类必须实现抽象类的所有方法，且必须是public，可省略，同接口一样
  * 子类不能覆盖接口中的常量
  */
@@ -692,14 +712,14 @@
 //     // public $name;    //属性，报错
 //     const NAME = 'mark';    //常量
 //     // static $num = 10;   //静态变量，报错
-//     function aa();
+//     public function aa();
 //     function bb();
 //     function cc();
 // }
 
 // //子类
 // class Man implements Person{
-//     const NAME = 'JACK';    //报错
+//     // const NAME = 'JACK';    //报错
 //     function aa(){
 //         return 'aa';
 //     }
@@ -1007,3 +1027,425 @@
 // $str = "1223345677881";
 // $a = str_split($str,1);
 // print_r(array_unique($a));
+
+#78 二叉树遍历
+// class Node
+// {
+//     public $value;
+//     public $child_left;
+//     public $child_right;
+// }
+// final class Ergodic
+// {
+//     //前序遍历:先访问根节点，再遍历左子树，最后遍历右子树；并且在遍历左右子树时，仍需先遍历根节点，然后访问左子树，最后遍历右子树  
+//     public static function preOrder($root)
+//     {
+//         $stack = array();
+//         array_push($stack, $root);
+//         while (!empty($stack)) {
+//             $center_node = array_pop($stack);
+//             echo $center_node->value . ' ';
+//             //先把右子树节点入栈，以确保左子树节点先出栈  
+//             if ($center_node->child_right != null) array_push($stack, $center_node->child_right);
+//             if ($center_node->child_left != null) array_push($stack, $center_node->child_left);
+//         }
+//     }
+//     //中序遍历:先遍历左子树、然后访问根节点，最后遍历右子树；并且在遍历左右子树的时候。仍然是先遍历左子树，然后访问根节点，最后遍历右子树  
+//     public static function midOrder($root)
+//     {
+//         $stack = array();
+//         $center_node = $root;
+//         while (!empty($stack) || $center_node != null) {
+//             while ($center_node != null) {
+//                 array_push($stack, $center_node);
+//                 $center_node = $center_node->child_left;
+//             }
+//             $center_node = array_pop($stack);
+//             echo $center_node->value . ' ';
+//             $center_node = $center_node->child_right;
+//         }
+//     }
+//     //后序遍历:先遍历左子树，然后遍历右子树，最后访问根节点；同样，在遍历左右子树的时候同样要先遍历左子树，然后遍历右子树，最后访问根节点  
+//     public static function endOrder($root)
+//     {
+//         $push_stack = array();
+//         $visit_stack = array();
+//         array_push($push_stack, $root);
+//         while (!empty($push_stack)) {
+//             $center_node = array_pop($push_stack);
+//             array_push($visit_stack, $center_node);
+//             //左子树节点先入$pushstack的栈，确保在$visitstack中先出栈  
+//             if ($center_node->child_left != null) array_push($push_stack, $center_node->child_left);
+//             if ($center_node->child_right != null) array_push($push_stack, $center_node->child_right);
+//             while (!empty($visit_stack)) {
+//                 $center_node = array_pop($visit_stack);
+//                 echo $center_node->value . ' ';
+//             }
+//         }
+//     }
+// }
+// //创建二叉树  
+// $a = new Node();
+// $b = new Node();
+// $c = new Node();
+// $d = new Node();
+// $e = new Node();
+// $f = new Node();
+// $g = new Node();
+// $h = new Node();
+// $i = new Node();
+// $a->value = 'A';
+// $b->value = 'B';
+// $c->value = 'C';
+// $d->value = 'D';
+// $e->value = 'E';
+// $f->value = 'F';
+// $g->value = 'G';
+// $h->value = 'H';
+// $i->value = 'I';
+// $a->child_left = $b;
+// $a->child_right = $c;
+// $b->child_left = $d;
+// $b->child_right = $g;
+// $c->child_left = $e;
+// $c->child_right = $f;
+// $d->child_left = $h;
+// $d->child_right = $i;
+
+// //前序遍历  
+// Ergodic::preOrder($a);  //结果是：A B D H I G C E F  
+// echo PHP_EOL;
+// //中序遍历  
+// Ergodic::midOrder($a);  //结果是： H D I B G A E C F  
+// echo PHP_EOL;
+// //后序遍历  
+// Ergodic::endOrder($a); //结果是:  H I D G B E F C A
+// echo PHP_EOL;
+
+#79 类public protected private
+// class aa{
+//     public function bb(){
+//         return 1;
+//     }
+//     protected function cc(){
+//         return 1;
+//     }
+//     private function dd(){
+//         return 1;
+//     }
+// }
+
+// class ee extends aa{
+//     public function bb(){
+//         return parent::cc();    //子类内部访问父类的protected
+//         // return parent::dd();    //父类的private不能被子类访问
+//         return 2;
+//     }
+//     protected function gg(){
+//         return 2;
+//     }
+//     private function hh(){
+//         return 2;
+//     }
+// }
+// $c1 = new ee();
+// echo $c1::bb();
+// echo $c1::gg(); //protected private不能在类外部访问
+
+#80 不同http协议区别
+/**
+ * 1.http0.9
+ * 最初版本
+ * 仅支持get
+ * 仅能传输纯文本内容
+ * 无状态连接
+ * 
+ * 2.http1.0
+ * 传输文本形式不受限制
+ * 本质上支持长连接，增加了keep-alive，默认短连接
+ * 增加了状态码
+ * 
+ * 3.http1.1
+ * 默认长连接，tcp串行，长时间没通信，则关闭
+ * 节约带宽，支持只发送header头信息，不带任何body
+ * 断点传输请求
+ * 
+ * 4.http2.0
+ * 多路复用，tcp并发请求
+ * 头部header压缩，传输更快
+ * 服务端有主动推送的功能
+ * 
+ */
+
+#81 字符串相加
+//  $str1 = (int)'asddf';  //0
+//  $str2 = (int)'qwert';  //0
+//  echo $str1+$str2;
+
+#82 链表 增删改查
+// class Node
+// {
+//     public $data = '';
+//     public $next = null;
+//     function __construct($data)
+//     {
+//         $this->data = $data;
+//     }
+// }
+
+// // 计算链表元素个数
+// function countNode($head)
+// {
+//     $cur = $head;
+//     $i = 0;
+//     while (!is_null($cur->next)) {
+//         ++$i;
+//         $cur = $cur->next;
+//     }
+//     return $i;
+// }
+
+// /**
+//  * 顺序增加节点
+//  * $head：当前节点
+//  * $data：要增加的节点元素
+//  */
+// function addNode($head, $data)
+// {
+//     $cur = $head;
+//     while (!is_null($cur->next)) {
+//         $cur = $cur->next;
+//     }
+//     $new = new Node($data);
+//     $cur->next = $new;
+// }
+
+// // 紧接着插在$no后
+// function insertNode($head, $data, $no)
+// {
+//     if ($no > countNode($head)) {
+//         return false;
+//     }
+//     $cur = $head;
+//     $new = new Node($data);
+//     for ($i = 0; $i < $no; $i++) {
+//         $cur = $cur->next;
+//     }
+//     $new->next = $cur->next;
+//     $cur->next = $new;
+// }
+
+// // 删除第$no个节点
+// function delNode($head, $no)
+// {
+//     if ($no > countNode($head)) {
+//         return false;
+//     }
+//     $cur = $head;
+//     for ($i = 0; $i < $no - 1; $i++) {
+//         $cur = $cur->next;
+//     }
+//     $cur->next = $cur->next->next;
+// }
+
+// // 遍历链表
+// function showNode($head)
+// {
+//     $cur = $head;
+//     while (!is_null($cur->next)) {
+//         $cur = $cur->next;
+//         echo $cur->data . PHP_EOL;
+//     }
+// }
+
+// $head = new Node(null); //定义头节点
+// print_r($head); //此时链表为空
+// addNode($head, 'a');
+// print_r($head);
+// addNode($head, 'b');
+// print_r($head);
+// addNode($head, 'c');
+// print_r($head);
+// insertNode($head, 'd', countNode($head));   //插入节点
+// print_r($head);
+// showNode($head);
+// delNode($head, 2);  //删除节点
+// showNode($head);
+
+#83 斐波那契数列 1 1 2 3 5 8 13 21 34 55 …
+//非递归写法：
+// function fbnq($n){  //传入数列中数字的个数
+//     if($n <= 0){
+//         return 0;
+//     }
+//     $array[1] = $array[2] = 1; //设第一个值和第二个值为1
+//     for($i=3;$i<=$n;$i++){ //从第三个值开始
+//         $array[$i] = $array[$i-1] + $array[$i-2]; 
+//         //后面的值都是当前值的前一个值加上前两个值的和
+//     }
+//     return $array;
+// }
+
+// //递归写法：
+// function fbnq($n){
+//     if($n <= 0) return 0;
+//     if($n == 1 || $n == 2) return 1;
+//     return fbnq($n - 1) + fbnq($n - 2);
+// }
+// print_r(fbnq(6));
+
+#84 %  取模，即整除
+// echo 3%2;   //1
+// echo intval(3/2);
+
+#85 汉诺塔问题：递归方法
+/**
+ * Hanoi(n, a, b, c) = Hanoi(n-1, a, c, b) + 1 + Hanoi(n-1, b, a, c)：
+ * 将a上面n-1个盘子移到b，再将a最下面的盘子移到c，再将b上的n-1个盘子移到c，
+ * 此时，n盘子汉诺塔问题 变成了 移动一个盘子 + 两个n-1盘子汉诺塔问题。
+ */
+// function hanoi($n)
+// {
+//     if ($n <= 1) return 1;
+//     return 2 * hanoi($n - 1) + 1;
+// }
+// $n = 6;
+// echo hanoi($n);
+
+#86 闭包的使用
+/**
+ * 匿名函数
+ * 闭包总结到最后，就是与函数不同的地方就是多加了一个use中间值，
+ * 使用的时候注意一点是function后面的()为可变变量，use()里面的变量为实例一次后不改动的变量
+ */
+// $param = 1;
+// $data = function () use ($param)
+// {
+//     var_dump($param);    
+// };
+
+// $data();
+
+// $param = 2;
+// $data();
+
+// $param = 1;
+// //实例化
+// $data = function () use ($param)
+// {
+//     var_dump($param);    
+// };
+
+// $data();
+
+// $param = 2;
+// //实例化
+// $data = function () use ($param)
+// {
+//     var_dump($param);
+// };
+// $data();
+
+// $arr = [
+//     '米' => ['咸粥', '甜粥', '米饭'], 
+//     '面' => ['面条', '花卷', '馒头'], 
+// ];
+
+// $param = '';
+// $bag = function ($data) use ($param)
+// {
+//     $l = count($data);
+//     return $data[rand(0, $l-1)];
+// };
+
+// $eat_arr = [];
+
+// foreach ($arr as $key => $value) {
+//     $each_arr[] = '吃'.$key.'：'.$bag($value);        
+// }
+
+// echo implode(',', $each_arr);
+
+#87 静态，非静态的区别
+// class A{
+//     public static $num = 0; //静态变量
+//     public $age = 20;
+//     const NAME = 'jack';
+//     public static function aa(){
+//         // return $this->bb();
+//         // return $this->age;
+//         return self::$num;
+//         return self::NAME;
+//         return 1;
+//     }
+//     public function bb(){
+//         return self::$num;
+//         return $this->age;
+//         return $this->aa();
+//         return 2;
+//     }
+// }
+
+// $obj = new A();
+// // echo A::$age;
+// // echo $obj->age;
+// // // echo A::$num;
+// // echo $obj->$num;
+// // // echo A::aa();
+// // echo $obj->aa();
+// // echo $obj->aa();
+// echo $obj->bb();
+
+#88 比较字符串
+// $a = 'a';
+// // $b = 'a';
+// $b = &$a;
+// $a = 'aa';
+// // $b = 'b';
+// unset($a);
+// // unset($b);
+// // echo $a;
+// echo $b;
+// xdebug_debug_zval('a');
+// xdebug_debug_zval('b');
+// // echo $a < $b? 1 : 2;
+
+#89 new self 与 new static的区别
+/**
+ * 首先，他们的区别只有在继承中才能体现出来，如果没有任何继承，那么这两者是没有区别的。
+ * 然后，new self()返回的实例是万年不变的，无论谁去调用，都返回同一个类的实例，而new static()则是由调用者决定的。
+ */
+// class Father {
+
+//     public function getNewFather() {
+//         return new self();  //父类
+//     }
+
+//     public function getNewCaller() {
+//         return new static();    //可能是父类也可能是子类
+//     }
+
+// }
+
+// // $f = new Father();
+
+// // print get_class($f->getNewFather());    //Father
+// // print get_class($f->getNewCaller());    //Father
+
+// //继承
+// class Sun1 extends Father {
+
+// }
+
+// //继承
+// class Sun2 extends Father {
+
+// }
+
+// $sun1 = new Sun1(); //new子类对象
+// $sun2 = new Sun2(); //new子类对象
+
+// print get_class($sun1->getNewFather()); //Father
+// print get_class($sun1->getNewCaller()); //Sun1
+// print get_class($sun2->getNewFather()); //Father
+// print get_class($sun2->getNewCaller()); //Sun2
