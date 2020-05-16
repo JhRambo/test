@@ -189,7 +189,7 @@
 // echo $path = parse_url($url,PHP_URL_PATH).PHP_EOL;   // /abc/ab/1.php
 // echo $scheme = parse_url($url,PHP_URL_SCHEME).PHP_EOL;   //http
 // echo $host = parse_url($url,PHP_URL_HOST).PHP_EOL;   //www.baidu.com
-// echo $query = parse_url($url,PHP_URL_QUERY).PHP_EOL; //id=1&name
+// echo $query = parse_url($url,PHP_URL_QUERY).PHP_EOL; //id=1&name=aaa
 // echo $fragment = parse_url($url,PHP_URL_FRAGMENT).PHP_EOL;   //bbb
 
 #18 计算字符长度
@@ -1389,12 +1389,11 @@
 // $obj = new A();
 // // echo A::$age;
 // // echo $obj->age;
-// // // echo A::$num;
-// // echo $obj->$num;
-// // // echo A::aa();
+// echo A::$num;
+// echo $obj::$num;
+// // echo $obj::aa();
 // // echo $obj->aa();
-// // echo $obj->aa();
-// echo $obj->bb();
+// // echo $obj->bb();
 
 #88 比较字符串
 // $a = 'a';
@@ -1449,3 +1448,135 @@
 // print get_class($sun1->getNewCaller()); //Sun1
 // print get_class($sun2->getNewFather()); //Father
 // print get_class($sun2->getNewCaller()); //Sun2
+
+#90 
+// class A
+// {
+//     public $num = 100;
+// }
+// $a = new A();
+// $b = $a;
+// $a->num = 200;
+// echo $b->num;   //200
+
+#91
+// $d = mktime(9, 12, 31, 6, 10, 2015); //时，分，秒，月，日，年。
+// echo "创建日期是 " . date("Y-m-d h:i:sa", $d);   2015-06-10 09:12:31am
+
+#92 getdate()   返回数组
+// $now = date('Y-m-d h:i:s');
+// print_r(getdate(time()));
+
+#93
+// $a = 1;
+// $b = 2;
+// if ($b = 5) {
+//     $b++;
+// }
+// echo $b;
+
+#94 array_count_values
+// $x = array(1, 3, 2, 3, 7, 8, 9, 7, 3);
+// $y = array_count_values($x);
+// print_r($y);
+// echo $y[8];
+
+#95 preg_match 成功返回1 失败返回0
+// $qpt = 'Eat to live, but not live to eat';
+// echo preg_match("/^to/", $qpt);
+
+#96
+// function total_Sum($c=5, $b=3,$a){
+//     echo$a."+ ".$b." + ".$c." = ".($a+$b+$c) ;
+// }
+// total_Sum(1);
+
+#97 字符串比较大小
+// $str = "LAMPbrotherASD";
+// $str1 = "LAMPBrother";
+// $strc = strcmp($str, $str1);
+// echo $strc;
+
+#98
+// $x = "display";
+// echo ${$x . '_result'}();
+
+// function display_result(){
+//     return 1;
+// }
+
+#99 trait 实现多继承
+// trait Dog
+// {
+//     public $name = "dog";
+//     public function bark()
+//     {
+//         echo "This is ".$this->name;
+//     }
+// }
+// class Animal
+// {
+//     public function eat()
+//     {
+//         print( "This is animal eat");
+//     }
+// }
+// class Cat extends Animal
+// {
+//     use Dog;
+//     public function drive()
+//     {
+//         echo( "This is cat drive");
+//     }
+// }
+// $cat = new Cat();
+// $cat->drive();
+// echo PHP_EOL;
+// $cat->eat();
+// echo PHP_EOL;
+// $cat->bark();
+// echo PHP_EOL;
+
+#100
+// class A
+// {
+//     public static $num = 0;
+//     public function __construct()
+//     {
+//         self::$num++;
+//     }
+// }
+// new A();
+// new A();
+// new A();
+// echo A::$num;
+
+#101 输出当前文件夹下的所有文件名，包括..
+// $x = dir(".");
+// while ($y = $x->read()) {
+//     echo $y;
+// }
+// $x->close();
+
+#102 preg_spilt 正则匹配
+// $str = 'qwe,1q,we';
+// $a = preg_split('/q/',$str);
+// print_r($a);
+
+#103
+// $arr = array('a' => 1, 'c' => 2);
+// $arr[] = 56;    //对上一个数字索引+1，找到即停止，如果前面都没有数字索引，则当前索引为0
+// $arr["x"] = 42;
+// print_r($arr);
+
+#104
+// $x = 1;
+// ++$x;
+// $y = $x++;  //先把$X赋值给y，x再加一
+// echo $x.PHP_EOL;
+// echo $y.PHP_EOL;
+
+#105
+$str1 = 'abc';
+$str2 = 'def';
+echo "{$str1}{$str2}";
