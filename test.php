@@ -1603,3 +1603,17 @@
 
 #107 test git reset --soft --hard --mixed
  
+#108 array
+$arr = [
+    [
+        'id' => 1,
+        'name' => 'a',
+        'age' => 20,
+    ],
+    [
+        'id' => 2,
+        'name' => 'b',
+        'age' => 21,
+    ],
+];
+array_column($arr, 'id');
