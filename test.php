@@ -1617,5 +1617,7 @@ $arr = [
     ],
 ];
 array_column($arr, 'id');
+
+#109 array_chunk
 $arr = [1,2,3,4,5,6,7,8];
 $chunk_arr = array_chunk($arr, 3);
