@@ -1604,20 +1604,41 @@
 #107 test git reset --soft --hard --mixed
  
 #108 array
-$arr = [
-    [
-        'id' => 1,
-        'name' => 'a',
-        'age' => 20,
-    ],
-    [
-        'id' => 2,
-        'name' => 'b',
-        'age' => 21,
-    ],
-];
-array_column($arr, 'id');
+// $arr = [
+//     [
+//         'id' => 1,
+//         'name' => 'a',
+//         'age' => 20,
+//     ],
+//     [
+//         'id' => 2,
+//         'name' => 'b',
+//         'age' => 21,
+//     ],
+// ];
+// array_column($arr, 'id');
 
-#109 array_chunk
-$arr = [1,2,3,4,5,6,7,8];
-$chunk_arr = array_chunk($arr, 3);
+// #109 array_chunk
+// $arr = [1,2,3,4,5,6,7,8];
+// $chunk_arr = array_chunk($arr, 3);
+
+#110 字符串自增
+$a = 'zzzzz';
+// echo $a++;
+++$a;
+echo $a;
+
+#111 优先级
+// $a = 0; $b = 0;
+// if ($a = 3>0 || $b = 3>0) {
+//     $a++;
+//     $b++;
+// }
+// echo $a;
+// echo $b;
+
+#112 true false 自增自减
+// // $a = true;  //true 自增（自减），值不变
+// $a = false; //false 自增（自减），值不变
+// $a++;
+// echo $a;
