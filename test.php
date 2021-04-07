@@ -1642,3 +1642,53 @@ echo $a;
 // $a = false; //false 自增（自减），值不变
 // $a++;
 // echo $a;
+
+#113 往数组头部添加数据
+// $a = [1,2,3,4,5,6];
+// array_unshift($a, 7, 8, 9);
+// print_r($a);
+
+#114 yield生成器
+// function makeRange($length)
+// {
+//     for($i = 0; $i < $length; $i++) {
+//         yield $i;
+//     }
+// }
+// foreach (makeRange(10000000) as $i) {
+//     echo $i . PHP_EOL;
+// }
+
+#115 子类重写父类静态函数
+// //父类
+// class Parents
+// {
+//     public static function getClassName()
+//     {
+//         return __CLASS__;
+//     }
+
+//     public static function who()
+//     {
+//         echo self::getClassName();   //self 指向的是定义时持有它的类而不是调用时的
+//     }
+
+//     public static function who1()
+//     {
+//         echo static::getClassName();  //后期静态绑定
+//     }
+// }
+// //子类
+// class Children extends Parents
+// {
+//     public static function getClassName()
+//     {
+//         return __CLASS__;
+//     }
+// }
+// echo Parents::getClassName().PHP_EOL;   //Parents
+// echo Parents::who().PHP_EOL;            //Parents
+// echo Parents::who1().PHP_EOL;           //Parents
+// echo Children::getClassName().PHP_EOL;  //Children
+// echo Children::who().PHP_EOL;           //Parents
+// echo Children::who1().PHP_EOL;          //Children
