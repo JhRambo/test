@@ -429,7 +429,7 @@
 //     'id' int(10) not null auto_increment,
 //     'name' varchar(20) default null,
 //     primary key (id),
-//     index (name) 
+//     index (name)
 // )engine=innodb;
 
 #39 计算两个文件的相对路径
@@ -780,7 +780,7 @@
 //     static $total = 0;
 //     if ($num >= 1) {
 //         $total += $num; //7
-//         return add(--$num);    //6 5 4 3 2 1 
+//         return add(--$num);    //6 5 4 3 2 1
 //     } else {
 //         return $total;
 //     }
@@ -845,13 +845,13 @@
 
 #70 算法-有n步台阶，一次只能上1步或2步，共有多少种走法
 /**
- * 1、n<=2的时候 并没有其他可选择的，所以可以得出f(0)=0;f(1)=1;f(2)=2; 
- * 2、n>2时情况就变复杂起来，但是这个时候可以操作的步骤也就2种 
- * 也就是走1步(n-1)与走2步(n-2)。所以可以得到f(n)=f(n-1)+f(n-2); 
+ * 1、n<=2的时候 并没有其他可选择的，所以可以得出f(0)=0;f(1)=1;f(2)=2;
+ * 2、n>2时情况就变复杂起来，但是这个时候可以操作的步骤也就2种
+ * 也就是走1步(n-1)与走2步(n-2)。所以可以得到f(n)=f(n-1)+f(n-2);
  */
 /**
  * 递归
- * 优点：可能是最好理解的算法了把。代码简单，好理解。 
+ * 优点：可能是最好理解的算法了把。代码简单，好理解。
  * 缺点：计算次数颇多，有很多冗余计算。数值越大，效率越低，递归调用浪费了空间，而且递归太深容易造成堆栈的溢出
  */
 // function findStep($n) {
@@ -1159,22 +1159,22 @@
  * 仅支持get
  * 仅能传输纯文本内容
  * 无状态连接
- * 
+ *
  * 2.http1.0
  * 传输文本形式不受限制
  * 本质上支持长连接，增加了keep-alive，默认短连接
  * 增加了状态码
- * 
+ *
  * 3.http1.1
  * 默认长连接，tcp串行，长时间没通信，则关闭
  * 节约带宽，支持只发送header头信息，不带任何body
  * 断点传输请求
- * 
+ *
  * 4.http2.0
  * 多路复用，tcp并发请求
  * 头部header压缩，传输更快
  * 服务端有主动推送的功能
- * 
+ *
  */
 
 #81 字符串相加
@@ -1280,7 +1280,7 @@
 //     }
 //     $array[1] = $array[2] = 1; //设第一个值和第二个值为1
 //     for($i=3;$i<=$n;$i++){ //从第三个值开始
-//         $array[$i] = $array[$i-1] + $array[$i-2]; 
+//         $array[$i] = $array[$i-1] + $array[$i-2];
 //         //后面的值都是当前值的前一个值加上前两个值的和
 //     }
 //     return $array;
@@ -1321,7 +1321,7 @@
 // $param = 1;
 // $data = function () use ($param)
 // {
-//     var_dump($param);    
+//     var_dump($param);
 // };
 
 // $data();
@@ -1333,7 +1333,7 @@
 // //实例化
 // $data = function () use ($param)
 // {
-//     var_dump($param);    
+//     var_dump($param);
 // };
 
 // $data();
@@ -1347,8 +1347,8 @@
 // $data();
 
 // $arr = [
-//     '米' => ['咸粥', '甜粥', '米饭'], 
-//     '面' => ['面条', '花卷', '馒头'], 
+//     '米' => ['咸粥', '甜粥', '米饭'],
+//     '面' => ['面条', '花卷', '馒头'],
 // ];
 
 // $param = '';
@@ -1361,7 +1361,7 @@
 // $eat_arr = [];
 
 // foreach ($arr as $key => $value) {
-//     $each_arr[] = '吃'.$key.'：'.$bag($value);        
+//     $each_arr[] = '吃'.$key.'：'.$bag($value);
 // }
 
 // echo implode(',', $each_arr);
@@ -1449,7 +1449,7 @@
 // print get_class($sun2->getNewFather()); //Father
 // print get_class($sun2->getNewCaller()); //Sun2
 
-#90 
+#90
 // class A
 // {
 //     public $num = 100;
@@ -1583,13 +1583,13 @@
 
 #106 redis lua脚本
 // $lua = <<<EOF
-// local num = redis.call('GET', KEYS[1]);  
+// local num = redis.call('GET', KEYS[1]);
 
 // if not num then
 // 	return 0;
 // else
-// 	local res = num * ARGV[1]; 
-// 	redis.call('SET',KEYS[1], res); 
+// 	local res = num * ARGV[1];
+// 	redis.call('SET',KEYS[1], res);
 // 	return res;
 // end
 
@@ -1623,10 +1623,10 @@
 // $chunk_arr = array_chunk($arr, 3);
 
 #110 字符串自增
-$a = 'zzzzz';
-// echo $a++;
-++$a;
-echo $a;
+// $a = 'zzzzz';
+// // echo $a++;
+// ++$a;
+// echo $a;
 
 #111 优先级
 // $a = 0; $b = 0;
@@ -1692,3 +1692,80 @@ echo $a;
 // echo Children::getClassName().PHP_EOL;  //Children
 // echo Children::who().PHP_EOL;           //Parents
 // echo Children::who1().PHP_EOL;          //Children
+
+#116 随机数
+// $numbers = range(1, 20);
+// // print_r($numbers);
+// shuffle($numbers);
+// foreach ($numbers as $number) {
+//     echo $number.PHP_EOL;
+// }
+
+#117 global_1
+// $x = 5;
+// $y = 10;
+// function myTest()
+// {
+//     global $x,$y;//通过global来声明$x,$y，相当于传递参数
+//     $y = $x + $y;
+// }
+// myTest();
+// echo $y;
+
+#118 global_2
+// $a = 1;
+// function test(){
+//     unset($GLOBALS['a']);
+// }
+// test();
+// echo $a;    //输出异常，$a被unset掉
+
+#119 global_3
+// $a = 1;
+// function test(){
+//     global $a;  //$a = &$GLOBALS['a']
+//     unset($a);
+// }
+// test();
+// echo $a;    //输出1，删除的只是别名，$GLOBALS['a']的引用$a
+
+#120 global_4
+// $a = 0;
+// function test(){
+//     global $a;  //$a = &$GLOBALS['a'];
+//     $a = 1;
+// }
+// test();
+// echo $a;    //输出1，当$a在函数体中发生改变时，由于引用传值的关系$GLOBALS['a']的值也就变成了1，故而外部的$a的值也就变成了1
+
+#121 global_5
+// $a = 1;
+// $b = 2;
+// function test(){
+//     global $a,$b;
+//     $a = $b;
+// }
+// test();
+// echo $a;    //输出2，由于同名引用的关系，函数体内$b的值为2，故而函数体内的$a的值为2，由于函数体内$a是对外部$a的同名引用，故而外部$a也是2
+
+#122 global_6
+// $a = 1;
+// $b = 2;
+// function test()
+// {
+//     global $a,$b;
+//     $a = &$b;
+// }
+// test();
+// echo $a;    //输出1，由于此时函数体内$a=&$b;由于&的关系，故而此时函数体内的$a已不再是对外部$a的同名引用，所以当函数体内的$a=2时，外部的$a并没有改变。
+
+#123 global_7
+// $a = 1;
+// $b = 2;
+// function test(){
+//     global $a,$b;
+//     $a = &$b;
+//     $a = 8;
+// }
+// test();
+// echo $a;echo $b; //输出1，8，此时函数体内的$a=8;由于引用传值的关系，函数体内的$b=8,再由于函数体内的$b对于外部的$b的同名引用，故而外部的$b=8，而由于&的关系，函数体内的$a与外部$a已不再是同名引用，故而外部的$a的值没有改变
