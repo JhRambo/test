@@ -14,7 +14,7 @@
 
 #2 注意|| 和 or的区别
 // $a = false || true; //true
-// $a = false or true; //false 优先前面的
+// $a = false or true or true; //false 优先前面的
 // $a = true or false; //true  优先前面的
 // $a = true || false; //true
 // var_dump($a);
@@ -389,11 +389,11 @@ $str = '   ';    //3个空格
 // }
 
 #4 分行读取
-$file = fopen("myMsg.txt", "r");
-while (!feof($file)) {
-    echo fgets($file);
-}
-fclose($file);
+// $file = fopen("myMsg.txt", "r");
+// while (!feof($file)) {
+//     echo fgets($file);
+// }
+// fclose($file);
 
 #5 spl函数库
 // try {
