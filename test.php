@@ -1784,3 +1784,165 @@ $arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
 // $a = [[1,2]];
 // $b = [[1,2]];
 // echo $a == $b? 1 : 2;
+
+#125 register_shutdown_function函数的用法
+#PHP中止的情况有三种：
+#执行完成
+#exit/die导致的中止
+#发生致命错误中止
+#【注意】输出的顺序，等执行完成了之后才会去执行register_shutdown_function的中止方法test
+#a. 第一种情况，执行完成
+// function test()
+// {
+//     echo '这个是中止方法test的输出';
+// }
+// register_shutdown_function('test');
+// echo 'before' . PHP_EOL;
+
+#b. 第二种情况，exit/die导致的中止
+// function test()
+// {
+//     echo '这个是中止方法test的输出';
+// }
+// register_shutdown_function('test');
+// echo 'before' . PHP_EOL;
+// exit();
+// echo 'after' . PHP_EOL;
+
+#c. 第三种情况，发送致命错误中止
+// function test()
+// {
+//     echo '这个是中止方法test的输出';
+// }
+// register_shutdown_function('test');
+// echo 'before' . PHP_EOL;
+// // 这里会发生致命错误
+// $a = new A();
+// echo 'after' . PHP_EOL;
+
+#E1.额外参数
+// class Shutdown
+// {
+//     public function stop()
+//     {
+//         echo "这个是stop方法的输出";
+//     }
+// }
+// // 当PHP终止的时候（执行完成或者是遇到致命错误中止的时候）会调用new Shutdown的stop方法
+// register_shutdown_function([new Shutdown(), 'stop']);
+// // 将因为致命错误而中止
+// $a = new A();
+// // 这一句并没有执行，也没有输出
+// echo '必须终止';
+
+#E2.在类中执行
+// class TestDemo {
+//     public function __construct()
+//     {
+//         register_shutdown_function([$this, "f"], "hello");
+//     }
+//     public function f($str)
+//     {
+//         echo "class TestDemo->f():" . $str;
+//     }
+// }
+// $demo = new TestDemo();
+// echo 'before' . PHP_EOL;
+
+#E3.
+/**
+ * 可以多次调用 register_shutdown_function，这些被注册的回调会按照他们注册时的顺序被依次调用。
+ * 注意：如果你在f方法（第一个注册的方法）里面调用exit方法或者是die方法的话，那么其他注册的中止回调也不会被调用
+ */
+// function f($str)
+// {
+//     echo $str . PHP_EOL;
+//     // 如果下面调用exit方法或者是die方法的话，其他注册的中止回调不会被调用
+//     // exit();
+// }
+ 
+// // 注册第一个中止回调f方法
+// register_shutdown_function("f", "hello");
+ 
+// class TestDemo
+// {
+//     public function __construct()
+//     {
+//         register_shutdown_function([$this, "f"], "hello");
+//     }
+ 
+//     public function f($str)
+//     {
+//         echo "class TestDemo->f():" . $str;
+//     }
+// }
+ 
+// $demo = new TestDemo();
+// echo 'before' . PHP_EOL;
+
+#E4.
+/**
+ * register_shutdown_function,注册一个会在php中止时执行的函数,中止的情况包括发生致命错误、die之后、exit之后、执行完成之后都会调用register_shutdown_function里面的函数
+ * Created by PhpStorm.
+ * User: Administrator
+ * Date: 2017/7/15
+ * Time: 17:41
+ */
+// class Shutdown
+// {
+//     public function stop()
+//     {
+//         echo 'Begin.' . PHP_EOL;
+//         // 如果有发生错误（所有的错误，包括致命和非致命）的话，获取最后发生的错误
+//         if (error_get_last()) {
+//             print_r(error_get_last());
+//         }
+//         // ToDo:发生致命错误后恢复流程处理
+//         // 中止后面的所有处理
+//         die('Stop.');
+//     }
+// }
+ 
+// // 当PHP终止的时候（执行完成或者是遇到致命错误中止的时候）会调用new Shutdown的stop方法
+// register_shutdown_function([new Shutdown(), 'stop']);
+// // 将因为致命错误而中止
+// $a = new A();
+// // 这一句并没有执行，也没有输出
+// echo '必须终止';
+
+#E5.
+// try {
+//     // 将因为致命错误而中止
+//     $a = new A();
+//     // 这一句并没有执行，也没有输出
+//     echo 'end';
+// } catch (Throwable $e) {
+//     print_r($e);
+//     echo $e->getMessage();
+// }
+
+#E6.
+register_shutdown_function('myFun'); //放到最上面，不然如果下面有致命错误，就不会调用myFun了。
+$execDone = false; //程序是否成功执行完（默认为false）
+
+/**
+********************* 业务逻辑区*************************
+*/
+$tas = 3;
+if ($tas == 3) {
+    new daixiaorui();
+}
+
+/**
+********************* 业务逻辑结束*************************
+*/
+$execDone = true; //由于程序由上至下执行，因此当执行到此后，则证明逻辑没有出现致命的错误。
+
+function myFun()
+{
+    global $execDone;
+    if ($execDone === false) {
+        file_put_contents("./myMsg.txt", date("Y-m-d H:i:s")."---error: 程序执行出错。\r\n", FILE_APPEND);
+        /******** 以下可以做一些处理 ********/
+    }
+}
