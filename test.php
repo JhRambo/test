@@ -217,7 +217,7 @@ $str = '   ';    //3个空格
 /**
  * 底层结构：hashtable，数组+链表
  */
-$arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
+// $arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
 // $arr2 = ['k'=>1,'l'=>9];
 // print_r(array_flip($arr1));   //键值互换
 // print_r(array_search(1,$arr1));  //查询给定值的key
@@ -240,9 +240,9 @@ $arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
 // 每天复习20个demo==========TODO=============
 
 #21 字符翻转1234567890 转换成 0987654321
-// (用前述你最熟悉的语言编写并标注简单注释, 不要使用函数,
+// 用你最熟悉的语言编写并标注简单注释, 不要使用函数
 // $str = '1234567890';
-// echo strrev($str);   //内置函数
+// // echo strrev($str);   //内置函数
 // function echoStr($str){
 //     // echo $str[2];
 //     $length = strlen($str);
@@ -264,8 +264,8 @@ $arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
 //     }
 //     return $r;
 // }
-// $vl = 30;
-// print_r(demo($vl));
+// $num = 30;
+// print_r(demo($num));
 
 #23 将字符长fang-zhi-gang 转化为驼峰法的形式：FangZhiGang  ucfirst
 // $str = 'fang-zhi-gang';
@@ -389,11 +389,11 @@ $arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
 // }
 
 #4 分行读取
-// $file = fopen("aa.txt", "r");
-// while (!feof($file)) {
-//     echo fgets($file);
-// }
-// fclose($file);
+$file = fopen("myMsg.txt", "r");
+while (!feof($file)) {
+    echo fgets($file);
+}
+fclose($file);
 
 #5 spl函数库
 // try {
@@ -401,6 +401,25 @@ $arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
 //         echo $line;
 // } catch (Exception $e) {
 //     echo $e->getMessage();
+// }
+
+#6 yield生成器
+// function readTxt()
+// {
+//     # code...
+//     $handle = fopen("./myMsg.txt", 'rb');
+
+//     while (feof($handle)===false) {
+//         # code...
+//         yield fgets($handle);
+//     }
+
+//     fclose($handle);
+// }
+
+// foreach (readTxt() as $key => $value) {
+//     # code...
+//     echo $value.'<br />';
 // }
 
 #32 加解密
@@ -1922,27 +1941,27 @@ $arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
 // }
 
 #E6.
-register_shutdown_function('myFun'); //放到最上面，不然如果下面有致命错误，就不会调用myFun了。
-$execDone = false; //程序是否成功执行完（默认为false）
+// register_shutdown_function('myFun'); //放到最上面，不然如果下面有致命错误，就不会调用myFun了。
+// $execDone = false; //程序是否成功执行完（默认为false）
 
-/**
-********************* 业务逻辑区*************************
-*/
-$tas = 3;
-if ($tas == 3) {
-    new daixiaorui();
-}
+// /**
+// ********************* 业务逻辑区*************************
+// */
+// $tas = 3;
+// if ($tas == 3) {
+//     new daixiaorui();
+// }
 
-/**
-********************* 业务逻辑结束*************************
-*/
-$execDone = true; //由于程序由上至下执行，因此当执行到此后，则证明逻辑没有出现致命的错误。
+// /**
+// ********************* 业务逻辑结束*************************
+// */
+// $execDone = true; //由于程序由上至下执行，因此当执行到此后，则证明逻辑没有出现致命的错误。
 
-function myFun()
-{
-    global $execDone;
-    if ($execDone === false) {
-        file_put_contents("./myMsg.txt", date("Y-m-d H:i:s")."---error: 程序执行出错。\r\n", FILE_APPEND);
-        /******** 以下可以做一些处理 ********/
-    }
-}
+// function myFun()
+// {
+//     global $execDone;
+//     if ($execDone === false) {
+//         file_put_contents("./myMsg.txt", date("Y-m-d H:i:s")."---error: 程序执行出错。\r\n", FILE_APPEND);
+//         /******** 以下可以做一些处理 ********/
+//     }
+// }
