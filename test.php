@@ -604,8 +604,10 @@ $str = '   ';    //3个空格
 // echo number_format($num, 2).PHP_EOL; //四舍五入  1.24
 
 #55 随机数
+// echo getrandmax();  //最大值：2147483647 => 2^31
 // echo rand(0,99999).PHP_EOL;
 // echo rand().PHP_EOL;
+// echo mt_getrandmax();   //最大值：2147483647 => 2^31
 // echo mt_rand(0,99999).PHP_EOL;
 // echo mt_rand().PHP_EOL;
 
@@ -938,7 +940,7 @@ $str = '   ';    //3个空格
 //     if($i<count($a)-1){
 //         $diff[] = abs($a[$i+1] - $a[$i]);
 //     }
-    
+
 // }
 // print_r($diff);
 // echo max($diff);
@@ -1631,7 +1633,7 @@ $str = '   ';    //3个空格
 // echo $ret;
 
 #107 test git reset --soft --hard --mixed
- 
+
 #108 array
 // $arr = [
 //     [
@@ -1879,23 +1881,23 @@ $str = '   ';    //3个空格
 //     // 如果下面调用exit方法或者是die方法的话，其他注册的中止回调不会被调用
 //     // exit();
 // }
- 
+
 // // 注册第一个中止回调f方法
 // register_shutdown_function("f", "hello");
- 
+
 // class TestDemo
 // {
 //     public function __construct()
 //     {
 //         register_shutdown_function([$this, "f"], "hello");
 //     }
- 
+
 //     public function f($str)
 //     {
 //         echo "class TestDemo->f():" . $str;
 //     }
 // }
- 
+
 // $demo = new TestDemo();
 // echo 'before' . PHP_EOL;
 
@@ -1921,7 +1923,7 @@ $str = '   ';    //3个空格
 //         die('Stop.');
 //     }
 // }
- 
+
 // // 当PHP终止的时候（执行完成或者是遇到致命错误中止的时候）会调用new Shutdown的stop方法
 // register_shutdown_function([new Shutdown(), 'stop']);
 // // 将因为致命错误而中止
@@ -1964,4 +1966,37 @@ $str = '   ';    //3个空格
 //         file_put_contents("./myMsg.txt", date("Y-m-d H:i:s")."---error: 程序执行出错。\r\n", FILE_APPEND);
 //         /******** 以下可以做一些处理 ********/
 //     }
+// }
+
+#126 ip
+// echo ip2long ($_SERVER['HOSTNAME']);
+// echo PHP_EOL;
+// echo long2ip ('3232235530');
+
+#127 php GD图像库
+// print_r(gd_info());
+// $remote_png_url = 'http://www.runoob.com/wp-content/themes/w3cschool.cc/assets/img/logo-domain-green2.png';
+// $img_data = getimagesize($remote_png_url);
+// print_r($img_data );
+
+#128 生成唯一ID
+#E1.session_create_id()
+// echo session_create_id();
+#E2.md5(uniqid());
+// echo md5(uniqid());
+
+#129 邮件
+// $to = "237230999@qq.com";         // 邮件接收者
+// $subject = "参数邮件";                // 邮件标题
+// $message = "Hello! 这是邮件的内容。";  // 邮件正文
+// $from = "ooxx666@88.com";   // 邮件发送者
+// $headers = "From:" . $from;         // 头部信息设置
+// mail($to,$subject,$message,$headers);
+// echo "邮件已发送";
+
+#130 php过滤器，filter
+// if (!filter_var("someone@example....com", FILTER_VALIDATE_EMAIL)) {
+//     echo ("E-mail is not valid");
+// } else {
+//     echo ("E-mail is valid");
 // }
