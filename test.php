@@ -203,7 +203,7 @@
 
 #18 计算字符长度
 // $str = 'hello你好世界';
-$str = '   ';    //3个空格
+// $str = '   ';    //3个空格
 // $str = null;     //0
 // $str = false;    //0
 // $str = true;        //1
@@ -472,7 +472,7 @@ $str = '   ';    //3个空格
 //     $len = count($arrB);    //5
 //     for ($n = 1; $n < $len; $n++) {
 //         if ($arrA[$n] != $arrB[$n]) {
-//             break;
+//             break;  //输出两个路径不同位置的n的值
 //         }
 //     }
 //     echo $n.PHP_EOL;    //3
@@ -2000,3 +2000,49 @@ $str = '   ';    //3个空格
 // } else {
 //     echo ("E-mail is valid");
 // }
+
+#131 获取客户端&服务端IP
+// echo $_SERVER['REMOTE_ADDR'];   //客户端
+// echo $_SERVER['SERVER_ADDR'];   //服务端
+
+#132 file_get_contents获取网页内容
+// $url = "http://www.phpres.com/index.html";
+// $str = file_get_contents($url);
+// print_r($str);
+
+#133 读程题
+// function foo($i)
+// {
+//     $i++;
+//     echo $i;
+// }
+// function bar(&$i)
+// {
+// }
+// $i = 10;
+// echo $i++, ++$i; //输出：10,12
+// foo($i); //输出：13
+// bar($i); //输出：无输出
+
+#134 读程题
+// $num = 10;
+// function multiply()
+// {
+//     // global $num;
+//     $num = $num * 10;
+// }
+// multiply();
+// echo $num;
+
+#135 count — 计算数组中的单元数目或对象中的属性个数
+// $str = 'abc';    //1
+// $str = '';  //1
+// $str = null;    //0
+// echo count($str);
+
+#136 实现第三方登录
+// 1、首先我们需要以开发者的身份向第三方登陆平台申请接入应用，申请成功后，我们会获得一个【appID】和一个【secrectID】；
+// 2、当我们的网站需接入第三方登陆时，会引导用户跳转到第三方的登陆授权页面，此时把之前申请的appID和secrectID带给登陆授权页面；
+// 3、用户登陆成功后即得到授权，第三方会返回一个临时的【code】给我们的网站；
+// 4、我们的网站接受到code后，再次向我们的第三方发起请求，并携带接收的code,从第三方获取【access_token】；
+// 5、第三方处理请求后，会返回一个access_token给我们的网站，我们的网站获取到access_token后就可以调用第三方提供的接口了，比如获取用户信息等。最后把该用户信息存入到我们站点的数据库，并把信息保存到session中，实现用户的第三方登陆；
