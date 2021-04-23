@@ -2046,3 +2046,11 @@
 // 3、用户登陆成功后即得到授权，第三方会返回一个临时的【code】给我们的网站；
 // 4、我们的网站接受到code后，再次向我们的第三方发起请求，并携带接收的code,从第三方获取【access_token】；
 // 5、第三方处理请求后，会返回一个access_token给我们的网站，我们的网站获取到access_token后就可以调用第三方提供的接口了，比如获取用户信息等。最后把该用户信息存入到我们站点的数据库，并把信息保存到session中，实现用户的第三方登陆；
+
+#137 array_filter去除数组空值
+$array1 = array('  ',1,'',2,3);
+print_r(array_filter($array1, "del"));
+function del($var)
+{
+    return(trim($var));
+}
