@@ -217,22 +217,21 @@
 /**
  * 底层结构：hashtable，数组+链表
  */
-// $arr1 = ['a'=>1,'b'=>2,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3];
+// $arr1 = ['a'=>1,'b'=>1,'c'=>3,'d'=>4,'e'=>8,'f'=>6,'g'=>3,'h'=>9];
 // $arr2 = ['k'=>1,'l'=>9];
 // print_r(array_flip($arr1));   //键值互换
-// print_r(array_search(1,$arr1));  //查询给定值的key
+// print_r(array_search(1,$arr1));  //查询给定值的key，如果有多个一样的值，则输出第一个键
 // print_r(array_splice($arr1,0,2));  //截取数组，偏移量，长度
 // print_r(array_chunk($arr1,3));   //拆数组=》二维数组，3表示每个子数组的元素个数
 // print_r(array_combine(['a','b'],['1','2']));    //key和value合并生成一个数组
 // print_r(array_diff($arr2,$arr1));   //返回$arr2中不存在的数组 这里只判断value的值是否相同
-// print_r(array_intersect($arr2,$arr1));  //交集  这里只判断value的值是否相同，并输出['k'=>1]（以第一个参数的数组为准）
+// print_r(array_intersect($arr2,$arr1));  //交集  这里只判断value的值是否相同，并输出['k'=>1,'1'=>9]（以第一个参数的数组为准）
 // print_r(array_reverse($arr1));  //倒序输出
 // print_r(array_unique($arr1));    //移除重复值，保留第一次出现的值
 // print_r(array_fill('3',5,'a'));  //用给定的键值填充数组（3：起始索引，5：数组长度，a：键值）
-// array_pop($arr1);   //弹出顶部元素，类似于栈，后进先出
-// print_r($arr1);
-// array_shift($arr1);//弹出头部元素，类似于队列，先进先出
-// print_r($arr1);
+// array_pop($arr1);print_r($arr1);//弹出顶部元素，类似于栈，后进先出
+// array_shift($arr1);print_r($arr1);//弹出头部元素，类似于队列，先进先出
+// print_r(array_keys($arr1)); //输出数组所有键名
 
 #20 获取字符首次出现的位置 strpos
 // $str = 'aAbB';
@@ -2048,9 +2047,105 @@
 // 5、第三方处理请求后，会返回一个access_token给我们的网站，我们的网站获取到access_token后就可以调用第三方提供的接口了，比如获取用户信息等。最后把该用户信息存入到我们站点的数据库，并把信息保存到session中，实现用户的第三方登陆；
 
 #137 array_filter去除数组空值
-$array1 = array('  ', 1, '', 2, 3);
-print_r(array_filter($array1, "del"));
-function del($var)
-{
-    return (trim($var));
-}
+// $array1 = array('  ', 1, '', 2, 3);
+// print_r(array_filter($array1, "del"));
+// function del($var)
+// {
+//     return (trim($var));
+// }
+
+#138 写出一个能创建多级目录的PHP函数
+/**
+ * 创建多级目录
+ * 考察mkdir，0777模式创建目录
+ * @param $path string 要创建的目录
+ * @param $mode int 创建目录的模式，在windows下可忽略
+ */
+// function create_dir($path, $mode = 0777)
+// {
+//     if (is_dir($path)) {
+//         # 如果目录已经存在，则不创建
+//         echo "该目录已经存在";
+//     } else {
+//         # 不存在，创建
+//         if (mkdir($path, $mode, true)) {
+//             echo "创建目录成功";
+//         } else {
+//             echo "创建目录失败";
+//         }
+//     }
+// }
+// create_dir('/var/www/test/log');
+
+#139 php垃圾回收机制
+/**
+ * PHP可以自动进行内存管理，清除不再需要的对象。
+ * PHP使用了引用计数(reference counting)这种单纯的垃圾回收(garbage collection)机制。
+ * 每个对象都内含一个引用计数器，每个reference连接到对象，计数器加1。
+ * 当reference离开生存空间或被设为NULL，计数器减1。
+ * 当某个对象的引用计数器为零时，PHP知道你将不再需要使用这个对象，释放其所占的内存空间
+ */
+
+#140 写一段PHP代码，确保多个进程同时写入同一个文件成功
+// $fp = fopen("myMsg.txt", "a+");
+// if (flock($fp, LOCK_EX)) {
+//     sleep(5);
+//     //获得写锁，写数据
+//     fwrite($fp, "当前时间：".date('Y-m-d H:i:s'));
+//     // 解除锁定
+//     flock($fp, LOCK_UN);
+// } else {
+//     echo "file is locking...";
+// }
+// fclose($fp);
+
+#141 编写一个函数，递归遍历，实现无限分类，输出树形结构
+/**
+ * 表结构
+ * CREATE TABLE tp_category (
+ *	`cat_id` INT UNSIGNED NOT NULL auto_increment PRIMARY KEY COMMENT '类别ID',
+ *	`cat_name` VARCHAR ( 30 ) NOT NULL DEFAULT '' COMMENT '类别名称',
+ *  `parent_id` INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '类别父ID',
+ *  `level` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '级别',
+ * ) ENGINE = INNODB charset = utf8;
+ */
+// $conn = require_once 'config/db.php';
+// $sql = 'select * from tp_category';
+// $data = [];
+// $result = $conn->query($sql);
+// if ($result->num_rows > 0) {
+//     // 输出数据
+//     while($row = $result->fetch_assoc()) {
+//         $data[] = $row;
+//     }
+// }
+// if (!empty($data)) {
+//     $resultTree = tree($data);
+//     print_r($resultTree);
+// }
+// function tree($array)
+// {
+//     //第一步 构造数据
+//     $items = array();
+//     foreach($array as $value){
+//         $items[$value['cat_id']] = $value;
+//     }
+//     //第二部 遍历数据 生成树状结构
+//     /**
+//      * 这个方法的核心在于引用，php变量默认的传值方式是按指传递
+//      * 也就是说 假如说 遍历顺序是 福建省 福州市 当遍历到福建省时 会把福建省放到tree中 
+//      * 遍历到福州市时 会把福州市放到福建省的子节点数组中 
+//      * 但是！！！ 这会儿的tree数组中 福建省已经放进去了 根据php变量按值传递的规则 你并没有更改tree数组中的福建省的数据 
+//      * 所以这里用到了引用传递
+//      * 当你对福建省做更改时，tree数组中的福建省也一并做了更改
+//      */
+//     $tree = array();
+//     foreach($items as $key => $value){
+//         if(isset($items[$value['parent_id']])){
+//             $items[$value['parent_id']]['children'][] = &$items[$key];
+//         }else{
+//             $tree[] = &$items[$key];
+//         }
+//     }
+//     return $tree;
+// }
